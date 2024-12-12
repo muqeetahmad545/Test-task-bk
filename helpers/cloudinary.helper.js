@@ -1,5 +1,5 @@
-const cloudinary = require("cloudinary").v2;
-require("dotenv").config();
+const cloudinary = require('cloudinary').v2;
+require('dotenv').config();
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -9,15 +9,15 @@ cloudinary.config({
 const handleUpload = async (file, folderName) => {
   try {
     const uploadOptions = {
-      resource_type: "auto",
+      resource_type: 'auto',
       public_id: file.originalname,
-      folder: folderName.folderName, 
+      folder: folderName.folderName,
     };
 
     const res = await cloudinary.uploader.upload(file, uploadOptions);
     return res;
   } catch (error) {
-    throw new Error("Error uploading image to Cloudinary: " + error.message);
+    throw new Error('Error uploading image to Cloudinary: ' + error.message);
   }
 };
 

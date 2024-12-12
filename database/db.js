@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
+const colors = require('colors');
+async function connectToDatabase() {
+  try {
+    await mongoose.connect(process.env.MONGO_URL);
 
-const connectToDatabase = async () => {
-    try {
-        await mongoose.connect("mongodb://localhost:27017/TsetApp");
-        console.log('Database connection successfully');
-    } catch (err) {
-        console.error('Database connection error:', err);
-    }
-};
-
+    console.log(`Connecting to MongoDB Successfully`.bgCyan);
+  } catch (error) {
+    console.error('Error connecting to Database:', error);
+  }
+}
 module.exports = connectToDatabase;

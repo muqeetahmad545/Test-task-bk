@@ -1,11 +1,11 @@
-const { handleUpload } = require("../helpers/cloudinary.helper");
+const { handleUpload } = require('../helpers/cloudinary.helper');
 
-const multer = require("multer");
+const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
-const myUploadMiddleware = upload.single("file");
+const myUploadMiddleware = upload.single('file');
 const maxSize = process.env.MAX_FILE_SIZE_MB || 2;
-const allowedMimeTypes = ["image/jpeg", "image/png", "application/pdf"];
+const allowedMimeTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
 function runMiddleware(req, res, fn) {
   return new Promise((resolve, reject) => {
@@ -24,26 +24,27 @@ const imageHandler = async (req, res) => {
     if (req.file.size > maxSize * 1024 * 1024) {
       return res
         .status(400)
-        .json({ error: "File size exceeds the allowed limit" });
+        .json({ error: 'File size exceeds the allowed limit' });
     }
     if (!allowedMimeTypes.includes(req.file.mimetype)) {
-      return res
-        .status(400)
-        .json({
-          error: "Invalid file type. Only JPG, PNG, and PDF are allowed.",
-        });
+      return res.status(400).json({
+        error: 'Invalid file type. Only JPG, PNG, and PDF are allowed.',
+      });
     }
-    const b64 = Buffer.from(req.file.buffer).toString("base64");
-    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+    const b64 = Buffer.from(req.file.buffer).toString('base64');
+    let dataURI = 'data:' + req.file.mimetype + ';base64,' + b64;
 
-    const folderName = "Test Cars Images"; 
-    const cldRes = await handleUpload(dataURI, { folderName }); 
+    const folderName = 'Test Cars Images';
+    const cldRes = await handleUpload(dataURI, { folderName });
 
     if (!cldRes || !cldRes.secure_url) {
-      throw new Error("Image upload to Cloudinary failed");
+      throw new Error('Image upload to Cloudinary failed');
     }
 
-    return { public_id: cldRes.public_id, secucarImagere_url: cldRes.secure_url };
+    return {
+      public_id: cldRes.public_id,
+      secucarImagere_url: cldRes.secure_url,
+    };
   } catch (error) {
     throw error;
   }
