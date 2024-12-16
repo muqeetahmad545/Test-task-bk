@@ -1,17 +1,13 @@
 const express = require('express');
 const { imageHandler } = require('../controller/upload');
-// const { protectRoutes } = require("../Middleware/authMiddleware");
 const router = express.Router();
-
-// router.use(protectRoutes);
 
 router.post('/img', async (req, res) => {
   try {
     const result = await imageHandler(req, res);
 
-    console.log('Cloudinary upload result:', result);
+    // console.log('Cloudinary upload result:', result);
 
-    // Check if the correct key exists in the result, and use it
     const secureUrl = result.secure_url || result.secucarImagere_url;
 
     if (!secureUrl) {

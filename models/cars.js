@@ -21,7 +21,7 @@ const carSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
-  carImages: { type: String },
+  carImages: [{ type: String }],
 });
 
 const Car = mongoose.model('Car', carSchema);
